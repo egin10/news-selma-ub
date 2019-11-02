@@ -2,7 +2,8 @@
 /**
  * https://github.com/egin10
  * Get Selma UB News
- * url : https://selma.ub.ac.id/category/berita/
+ * base_url     : https://selma.ub.ac.id/category/berita/
+ * paginate_url : https://selma.ub.ac.id/category/berita/page/2/
  * 
  * MIT
  */
