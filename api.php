@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * https://github.com/egin10
@@ -13,8 +12,17 @@ date_default_timezone_set("Asia/Jakarta");
 require_once(__DIR__."/core.php");
 
 //config
-$base_url = "https://selma.ub.ac.id/category/berita/";
 $core = new Core;
+$base_url = "https://selma.ub.ac.id/category/berita/";
+if(isset($_GET['category'])){
+    if(isset($_GET['page'])){
+        $base_url = $base_url.strtolower($_GET['category'])."/page/".$_GET['page']."/";
+    }else{
+        $base_url = $base_url.strtolower($_GET['category'])."/";
+    }
+}else{
+    echo json_encode(['msg' => 'Category not found!']);
+}
 
 //init
 $ch_url = curl_init($base_url);
@@ -24,8 +32,12 @@ $get_url = curl_exec($ch_url);
 //proccess
 $hasil = $core->getBerita($get_url);
 
-//print on console
-print_r($hasil);
+//parse to json
+if($_GET['page'] > $hasil['pages']['lastPage']){
+    echo json_encode(['msg' => 'Page not found!']);
+}else{
+    echo json_encode($hasil);
+}
 
 curl_close($ch_url);
 unset($getData);
