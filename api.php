@@ -33,7 +33,7 @@ $get_url = curl_exec($ch_url);
 $hasil = $core->getBerita($get_url);
 
 //parse to json
-if($_GET['page'] > $hasil['pages']['lastPage']){
+if(isse($_GET['page']) > $hasil['pages']['lastPage']){
     echo json_encode(['msg' => 'Page not found!']);
 }else{
     echo json_encode($hasil);
