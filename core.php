@@ -18,10 +18,11 @@ class Core {
         return substr($teks, $ini, $panjang);
     }
 
-    public function getBerita(String $url)
+    public function getBerita(String $url): Array
     {
-        $arr['news'] = [];
+        $arr['categories'] = [];
         $arr['pages'] = [];
+        $arr['news'] = [];
         $result = $this->getStringBetween($url, '<div class="post-meta">', "<div class=\"navigation\">");
         $arrNews = explode('<div id="post-', $result);
         foreach($arrNews as $news)
@@ -52,6 +53,8 @@ class Core {
                 // 'news' => $news
             ]);
         }
+
+        //get pages
         $pages = trim($this->getStringBetween($url, '<li class="page_info">Page', '</li>'));
         $firstPage = trim(explode('of',$pages)[0]);
         $lastPage = trim(explode('of',$pages)[1]);
@@ -59,6 +62,16 @@ class Core {
             'fistPage' => $firstPage,
             'lastPage' => $lastPage,
         ];
+
+        //get categories
+        $strCategories = trim($this->getStringBetween($url, 'Kategori</h4>		<ul>', '</ul>'));
+        $arrCategories = explode('<li class="cat-item cat-item', $strCategories);
+        for($c = 1; $c < count($arrCategories); $c++){
+            $strCaterogy = trim($this->getStringBetween($arrCategories[$c], '"><a href="https://selma.ub.ac.id/category/', '</a>')).".";
+            $caterogy = trim($this->getStringBetween($strCaterogy, '>', '.'));
+            array_push($arr['categories'], $caterogy);
+        }
+
         return $arr;
     }
 }

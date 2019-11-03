@@ -19,7 +19,8 @@ Anda bisa melakukan kontribusi dengan cara fork repositori ini dan silahkan mela
 ## Change Log 👣
 ```
 [#0] Menambahkan api.php untuk menampilkan data dengan format JSON.
-[#1] Memilah data berdasarkan Category pada api.php
+[#1] Memilah data berdasarkan Category pada api.php.
+[#2] Menambahkan array categories.
 ```
 
 ## Lisensi ✍️
